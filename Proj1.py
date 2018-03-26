@@ -43,3 +43,5 @@ list_of_random_items = random.sample(json_data, num_to_select)
 finalOneHundred = list()
 for dictionary in list_of_random_items:
         finalOneHundred.append(dictionary.get('reviewText'))
+
+# linha de teste
