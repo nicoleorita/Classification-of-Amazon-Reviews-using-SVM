@@ -32,20 +32,19 @@ json_data = []
 for line in open(path):
     json_data.append(json.loads(line))
 
-json_data.describe()
 
 #select random 100.000 rows
 import random
 
 num_to_select = 100000                    # Set the number to select here.
-list_of_random_items = random.sample(json_data, num_to_select)
+list_of_random_reviews = random.sample(json_data, num_to_select)
 
 finalOneHundred = list()
-for dictionary in list_of_random_items:
+for dictionary in list_of_random_reviews:
         finalOneHundred.append(dictionary.get('reviewText'))
-        
     
-# ------------------------------
+
+# ------------------------------ CLEAN TEXT -------------------------------------
 
         
  #Convert list to dataframe 
@@ -72,13 +71,15 @@ clean_df.to_csv("clean_data.csv")
 clean_df.head()
 clean_df.tail()
 
-#TOKENIZING
+#-----------------------------------------------TOKENIZING--------------------------------
 from nltk.tokenize import RegexpTokenizer
 
 tokenizer = RegexpTokenizer(r'\w+')
 
 clean_df["tokens"] = clean_df["Review Text"].apply(tokenizer.tokenize)
 clean_df.head()
+
+
 
 from keras.preprocessing.text import Tokenizer
 from keras.preprocessing.sequence import pad_sequences
@@ -91,6 +92,9 @@ print("%s words total, with a vocabulary size of %s" % (len(all_words), len(VOCA
 print("Max sentence length is %s" % max(sentence_lengths))
 
 
+
+
+#Graph with sentence lenght vs. nr of sentences
 import matplotlib.pyplot as plt
 
 fig = plt.figure(figsize=(10, 10)) 
@@ -99,7 +103,7 @@ plt.ylabel('Number of sentences')
 plt.hist(sentence_lengths)
 plt.show()
 
-#BAG OF WORDS
+#---------------------------------------BAG OF WORDS----------------------------------------
 from sklearn.model_selection import train_test_split
 from sklearn.feature_extraction.text import CountVectorizer, TfidfVectorizer
 
